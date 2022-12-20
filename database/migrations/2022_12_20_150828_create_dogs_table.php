@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('dogs', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('raca')->nullable();
             $table->timestamps();
         });
     }
