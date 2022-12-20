@@ -1,3 +1,4 @@
+<!-- refactor(migration) * -->
 <?php
 
 use Illuminate\Database\Migrations\Migration;
