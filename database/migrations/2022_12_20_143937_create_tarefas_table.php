@@ -15,10 +15,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tarefas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->id();
             $table->text('descricao');
             $table->boolean('concluido');
+            $table->timestamps();
         });
     }
 
