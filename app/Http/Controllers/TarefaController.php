@@ -16,38 +16,57 @@ class TarefaController extends Controller
 
     public function store(Request $request)
     {
-        return Tarefa::create($request->all());
+        if (Tarefa::create($request->all())) {
+
+            return response()->json([
+                'message' => 'cadastrado com sucesso.'
+            ], 201);
+        }
+        return response()->json([
+            'message' => 'Erro ao cadastrar.'
+        ], 404);
     }
 
-    public function show($id)
+    public function show($tarefa)
     {
-        return Tarefa::find($id);
+        $tarefa = Tarefa::find($tarefa);
+        if ($tarefa) {
+            return $tarefa;
+        }
+        return response()->json([
+            'message' => 'Erro ao pesquisar tarefa.'
+        ], 404);
     }
 
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $tarefa)
     {
-        $tarefa = Tarefa::findOrfail($id);
-        $tarefa->update($request->all());
-        return $tarefa;
+        $tarefa = Tarefa::find($tarefa);
+        if ($tarefa) {
+            $tarefa->update($request->all());
+            return $tarefa;
+        }
+        return response()->json([
+            'message' => 'Erro ao atualizar a tarefa.'
+        ], 404);
     }
 
 
 
 
-    public function destroy($id)
+    public function destroy($tarefa)
     {
         // return Tarefa::destroy(($id));
-        $tarefa = Tarefa::find($id);
+        $tarefa = Tarefa::find($tarefa);
         if (!$tarefa) {
-            return  [
+            return response()->json([
                 'mensagem' => "o registro não existe"
-            ];
+            ], 404);
         }
-        $tarefa->destroy($id);
-        return  [
+        $tarefa->destroy($tarefa);
+        return response()->json([
             'mensagem' => "registro excluído"
-        ];
+        ], 201);
     }
 }

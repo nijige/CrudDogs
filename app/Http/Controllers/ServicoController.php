@@ -22,7 +22,7 @@ class ServicoController extends Controller
 
     public function show($id)
     {
-        return Servico::findOrFail($id);
+        return Servico::find($id);
     }
 
 
