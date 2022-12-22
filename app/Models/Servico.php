@@ -9,7 +9,11 @@ class Servico extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title',
-        'description',
+        'nome',
     ];
+
+    public function Servico()
+    {
+        return $this->hasMany(Servico::class);
+    }
 }
