@@ -16,28 +16,56 @@ class ServicoController extends Controller
 
     public function store(Request $request)
     {
-        return Servico::create($request->all());
+        if (Servico::create($request->all())) {
+
+            return response()->json([
+                'message' => 'cadastrado com sucesso.'
+            ], 201);
+        }
+        return response()->json([
+            'message' => 'Erro ao cadastrar.'
+        ], 404);
     }
 
 
-    public function show($id)
+    public function show($servico)
     {
-        return Servico::find($id);
+        $servico = Servico::find($servico);
+        if ($servico) {
+            return $servico;
+        }
+        return response()->json([
+            'message' => 'Erro ao pesquisar tarefa.'
+        ], 404);
     }
 
 
     public function update(Request $request, $id)
     {
 
-        $servico = Servico::findOrFail($id);
-        $servico->update($request->all());
-        return $servico;
+        $servico = Servico::find($id);
+        if ($servico) {
+            $servico->update($request->all());
+            return $servico;
+        }
+        return response()->json([
+            'message' => 'Erro ao atualizar a tarefa.'
+        ], 404);
     }
 
 
 
-    public function destroy($id)
+    public function destroy($servico)
     {
-        return Servico::destroy($id);
+        $servico = Servico::find($servico);
+        if (!$servico) {
+            return response()->json([
+                'mensagem' => "o registro não existe"
+            ], 404);
+        }
+        $servico =  Servico::destroy($servico);
+        return response()->json([
+            'mensagem' => "registro excluído"
+        ], 201);
     }
 }

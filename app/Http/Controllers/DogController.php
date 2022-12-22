@@ -16,31 +16,40 @@ class DogController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->input();
-        // return  $data['raca'];
-        $dog = Dog::create([
-            'nome' =>  $data['nome'],
-            'raca' =>  $data['raca']
+        if (Dog::create($request->all())) {
 
-        ]);
-        return $dog;
+            return response()->json([
+                'message' => 'cadastrado com sucesso.'
+            ], 201);
+        }
+        return response()->json([
+            'message' => 'Erro ao cadastrar.'
+        ], 404);
     }
 
 
     public function show($id)
     {
-        return Dog::find($id);
+        $dog =  Dog::find($id);
+        if ($dog) {
+            return $dog;
+        }
+        return response()->json([
+            'message' => 'Erro ao pesquisar.'
+        ], 404);
     }
 
 
     public function update(Request $request, $id)
     {
-        $data = $request->input();
         $dog = Dog::find($id);
-        $dog->nome = $data['nome'];
-        $dog->raca = $data['raca'];
-        $dog->save();
-        return $dog;
+        if ($dog) {
+            $dog->update($request->all());
+            return $dog;
+        }
+        return response()->json([
+            'message' => 'Erro ao atualizar.'
+        ], 404);
     }
 
 
