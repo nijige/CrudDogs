@@ -38,16 +38,16 @@ class TarefaController extends Controller
 
     public function destroy($id)
     {
-        return Tarefa::destroy(($id));
-        // $tarefa = Tarefa::find($id);
-        // if (!$tarefa) {
-        //     return  [
-        //         'mensagem' => "o registro não existe"
-        //     ];
-        // }
-        // $tarefa->destroy($id);
-        // return  [
-        //     'mensagem' => "registro excluído"
-        // ];
+        // return Tarefa::destroy(($id));
+        $tarefa = Tarefa::find($id);
+        if (!$tarefa) {
+            return  [
+                'mensagem' => "o registro não existe"
+            ];
+        }
+        $tarefa->destroy($id);
+        return  [
+            'mensagem' => "registro excluído"
+        ];
     }
 }
