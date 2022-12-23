@@ -32,7 +32,12 @@ class ServicoController extends Controller
     {
         $servico = Servico::find($servico);
         if ($servico) {
-            return $servico;
+            $response = [
+                'servico' => $servico,
+                'dog' => $servico->dog
+
+            ];
+            return $response;
         }
         return response()->json([
             'message' => 'Erro ao pesquisar tarefa.'

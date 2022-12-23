@@ -9,11 +9,11 @@ class Servico extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nome',
+        'nome', 'tipoServico'
     ];
-
-    public function Servico()
+    // Pegar Todos os dogs vinculados á serviço
+    public function Dog()
     {
-        return $this->hasMany(Servico::class);
+        return $this->hasMany(Dog::class);
     }
 }

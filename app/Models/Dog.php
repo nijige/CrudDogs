@@ -9,7 +9,12 @@ class Dog extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nome', 'raca'
+        'nome', 'raca', 'nomeTutor', 'idade'
     ];
     protected $table = 'dogs';
+
+    public function servico()
+    {
+        return $this->belongsTo(servico::class);
+    }
 }

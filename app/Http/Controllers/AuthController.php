@@ -29,7 +29,7 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $token
         ];
-        return response($user, 201);
+        return response($response, 201);
     }
     public function login(Request $request)
     {
@@ -41,11 +41,17 @@ class AuthController extends Controller
             ]
         );
         $user = User::where('email', $fields['email']->first());
+        // Se não tiver nenhum usuario com esse email ela vai retornar essa mensagem
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'E-mail ou Senha invalidos'
             ], 401);
         }
         $token = $user->createToken('UsuarioLogado')->plainTextToken;
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+        return response($response, 201);
     }
 }
